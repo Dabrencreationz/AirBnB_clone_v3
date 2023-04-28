@@ -40,7 +40,7 @@ def wirk_with_state_id(state_id):
         return jsonify(val.to_dict())
     elif request.method == "DELETE":
         storage.delete(val)
-        #storage.save()
+        storage.save()
         return make_response(jsonify({}), 200)
     elif request.method == 'PUT':
         try:
