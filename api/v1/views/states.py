@@ -24,7 +24,6 @@ def work_with_states():
         new_state.save()
         return make_response(jsonify(new_state.to_dict()), 201)
 
-
 @app_views.route('/states/<state_id>', strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
 def wirk_with_state_id(state_id):
@@ -39,8 +38,8 @@ def wirk_with_state_id(state_id):
     if request.method == 'GET':
         return jsonify(val.to_dict())
     elif request.method == "DELETE":
-        storage.delete(val)
-        storage.save()
+        val.delete()
+        del val
         return make_response(jsonify({}), 200)
     elif request.method == 'PUT':
         try:
