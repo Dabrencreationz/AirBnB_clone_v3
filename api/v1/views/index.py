@@ -10,10 +10,14 @@ from models.review import Review
 from api.v1.views import app_views
 from flask import jsonify
 
+
 @app_views.route('/status')
 def status():
     """This returns our status if successfully connected"""
-    return jsonify({'stauts': "OK"})
+
+
+return jsonify({'stauts': "OK"})
+
 
 @app_views.route('/stats')
 def stats():
@@ -26,4 +30,3 @@ def stats():
     end['states'] = storage.count(State)
     end['users'] = storage.count(User)
     return jsonify(end)
-
