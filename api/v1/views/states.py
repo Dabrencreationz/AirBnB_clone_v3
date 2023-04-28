@@ -52,6 +52,6 @@ def wirk_with_state_id(state_id):
         data.pop('updated_at', None)
         for k, v in data.items():
             setattr(val, k, v)
-        #val.save()
+        val.save()
         return make_response(jsonify(val.to_dict()), 200)
 
