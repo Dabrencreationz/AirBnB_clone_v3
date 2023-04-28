@@ -21,7 +21,7 @@ def work_with_states():
         if not data.get("name"):
             return make_response(jsonify("Missing name"), 400)
         new_state = State(**data)
-        new_state.save()
+        #new_state.save()
         return make_response(jsonify(new_state.to_dict()), 201)
 
 
@@ -40,7 +40,7 @@ def wirk_with_state_id(state_id):
         return jsonify(val.to_dict())
     elif request.method == "DELETE":
         storage.delete(val)
-        storage.save()
+        #storage.save()
         return make_response(jsonify({}), 200)
     elif request.method == 'PUT':
         try:
@@ -52,6 +52,6 @@ def wirk_with_state_id(state_id):
         data.pop('updated_at', None)
         for k, v in data.items():
             setattr(val, k, v)
-        val.save()
+        #val.save()
         return make_response(jsonify(val.to_dict()), 200)
 
