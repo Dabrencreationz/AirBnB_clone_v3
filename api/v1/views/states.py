@@ -21,7 +21,7 @@ def work_with_states():
         if not data.get("name"):
             return make_response(jsonify("Missing name"), 400)
         new_state = State(**data)
-        #new_state.save()
+        new_state.save()
         return make_response(jsonify(new_state.to_dict()), 201)
 
 
