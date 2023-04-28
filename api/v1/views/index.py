@@ -23,7 +23,7 @@ def stats():
     end['cities'] = storage.count(City)
     end['places'] = storage.count(Place)
     end['reviews'] = storage.count(Review)
-    end['amenities'] = storage.count(State)
+    end['states'] = storage.count(State)
     end['users'] = storage.count(User)
     return jsonify(end)
 
