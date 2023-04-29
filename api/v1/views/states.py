@@ -14,11 +14,10 @@ def work_with_states():
     if request.method == "GET":
         return jsonify([x.to_dict() for x in storage.all(State).values()])
     elif request.method == 'POST':
-        try:
-            data = request.get_json()
-        except Exception as e:
+        data = request.get_json()
+        if data is None:
             return make_response(jsonify("Not a JSON"), 400)
-        if not data.get("name"):
+        if 'name' not in data:
             return make_response(jsonify("Missing name"), 400)
         new_state = State(**data)
         new_state.save()
@@ -42,15 +41,12 @@ def wirk_with_state_id(state_id):
         storage.save()
         return make_response(jsonify({}), 200)
     elif request.method == 'PUT':
-        try:
-            data = request.get_json()
-        except Exception as e:
+        data = request.get_json()
+        if data is None:
             return make_response(jsonify("Not a JSON"), 400)
-        data.pop('id', None)
-        data.pop("created_at", None)
-        data.pop('updated_at', None)
         for k, v in data.items():
-            setattr(val, k, v)
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(val, k, v)
         val.save()
         return make_response(jsonify(val.to_dict()), 200)
 

@@ -12,7 +12,7 @@ from flasgger.utils import swag_from
 
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'], strict_slashes=False)
-@swag_from('documentation/user/get.yml', methods=['GET'])
+@swag_from('documentation/er/get.yml', methods=['GET'])
 def get_all_cities(state_id):
     """ get all cities of a particular state"""
     state = storage.get(State, state_id)
