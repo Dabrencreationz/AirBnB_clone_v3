@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """This returns the status of our api"""
-from models import storage
-from models.state import State
-from models.city import City
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
+from models import storage
+from models.city import City
+from models.state import State
+
 
 @app_views.route('/states/<string:state_id>/cities',
                  strict_slashes=False, methods=['GET', 'POST'])
@@ -27,6 +28,7 @@ def get_all_state_cities(state_id):
         city = City(**data)
         city.save()
         return make_response(jsonify(city.to_dict()), 201)
+
 
 @app_views.route('/cities/<city_id>', strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
@@ -54,4 +56,3 @@ def work_with_city_id(city_id):
                 setattr(val, k, v)
         val.save()
         return make_response(jsonify(val.to_dict()), 200)
-

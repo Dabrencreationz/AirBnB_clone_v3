@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """This returns the status of our api"""
-from models import storage
-from models.state import State
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
+from models import storage
+from models.state import State
+
 
 @app_views.route('/states', strict_slashes=False, methods=['GET', 'POST'])
 def work_with_states():
@@ -23,9 +24,10 @@ def work_with_states():
         new_state.save()
         return make_response(jsonify(new_state.to_dict()), 201)
 
+
 @app_views.route('/states/<state_id>', strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
-def wirk_with_state_id(state_id):
+def work_with_state_id(state_id):
     """This function performs various tasks according to the
     request received
     GET: Return the desired State
@@ -49,4 +51,3 @@ def wirk_with_state_id(state_id):
                 setattr(val, k, v)
         val.save()
         return make_response(jsonify(val.to_dict()), 200)
-

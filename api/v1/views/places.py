@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """This returns the status of our api"""
-from models import storage
-from models.place import Place
-from models.city import City
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
+from models import storage
+from models.city import City
+from models.place import Place
+
 
 @app_views.route('/cities/<string:city_id>/places',
                  strict_slashes=False, methods=['GET', 'POST'])
@@ -29,6 +30,7 @@ def get_all_city_places(city_id):
         place.save()
         return make_response(jsonify(place.to_dict()), 201)
 
+
 @app_views.route('/places/<place_id>', strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
 def work_with_place_id(place_id):
@@ -51,8 +53,8 @@ def work_with_place_id(place_id):
         if data is None:
             return make_response(jsonify("Not a JSON"), 400)
         for k, v in data.items():
-            if k not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            if k not in ['id', 'user_id', 'city_id',
+                         'created_at', 'updated_at']:
                 setattr(val, k, v)
         val.save()
         return make_response(jsonify(val.to_dict()), 200)
-
