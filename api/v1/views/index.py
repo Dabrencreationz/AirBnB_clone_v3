@@ -11,15 +11,15 @@ from api.v1.views import app_views
 from flask import jsonify
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """This returns our status if successfully connected"""
     return jsonify({'status': "OK"})
 
 
-@app_views.route('/status')
-def status():
-    """This returns our status if successfully connected"""
+@app_views.route('/stats', strict_slashes=False)
+def stats():
+    """This returns our stats if successfully connected"""
     end = {}
     end['amenities'] = storage.count(Amenity)
     end['cities'] = storage.count(City)
