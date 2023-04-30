@@ -14,12 +14,12 @@ from flask import jsonify
 @app_views.route('/status')
 def status():
     """This returns our status if successfully connected"""
-    return jsonify({'stauts': "OK"})
+    return jsonify({'status': "OK"})
 
 
-@app_views.route('/stats')
-def stats():
-    """This returns our stats if successfully connected"""
+@app_views.route('/status')
+def status():
+    """This returns our status if successfully connected"""
     end = {}
     end['amenities'] = storage.count(Amenity)
     end['cities'] = storage.count(City)
