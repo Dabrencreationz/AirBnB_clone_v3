@@ -33,9 +33,9 @@ def work_with_ids(place_id, amenity_id):
         abort(404)
     if request.method == 'POST':
         if getenv('HBNB_TYPE_STORAGE') == 'db':
-            if amen in place.amenites:
+            if amen in val.amenites:
                 return make_response(jsonify(amen.to_dict()), 200)
-            amen.place_id = place_id
+            val.amenities.append(amen)
         else:
             if amen.id in val.amenity_ids:
                 return make_response(jsonify(amen.to_dict()), 200)
