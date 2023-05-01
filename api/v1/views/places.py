@@ -86,7 +86,7 @@ def place_search():
                         for place in city.places:
                             f_places.append(place)
     if cities:
-        l_cities = [storage.get(City, c_id] for c_id in cities]
+        l_cities = [storage.get(City, c_id) for c_id in cities]
         for city in l_cities:
             if city:
                 for place in city.places:
