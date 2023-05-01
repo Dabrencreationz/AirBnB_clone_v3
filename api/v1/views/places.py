@@ -76,7 +76,6 @@ def place_search():
             (sta_s is None and ci_s is None and ame is None)):
         return jsonify([x.to_dict() for x in storage.all(Places).values()])
     result = []
-    amen = []
     if sta_s:
         for id_ in sta_s:
             val = storage.get(State, id_)
@@ -92,11 +91,11 @@ def place_search():
                     if place not in result:
                         result.append(place)
     if ame:
-        for id_ in ame:
-            val = storage.get(Amenity, id_)
-            if val:
-                amen.append(val)
-    if amen:
+        amen = [storage.get(Amenity, id_) for id_ in ame]
         result = [x for x in result
-                  if all(mem in place.amenities for mem in amen)]
-    return jsonify([x.to_dict() for x in result])
+                  if all(mem in place.amenities for mem in amen if mem is not None)]
+    places = []
+    for x in result:
+        dict_ = x.to_dict().pop('amenities', None)
+        places.append(dict_)
+    return jsonify(places)
