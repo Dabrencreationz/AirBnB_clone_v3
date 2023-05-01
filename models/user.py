@@ -28,7 +28,7 @@ class User(BaseModel, Base):
     @property
     def password(self):
         """Getter attribute"""
-        return self.__dict__['_password']
+        return self.__dict__.get('_password', "")
 
     @password.setter
     def password(self, password):
@@ -38,7 +38,7 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
-        val = kwargs.get('password', "")
-        self.password = val
-        kwargs.pop('password', None)
+      #  val = kwargs.get('password', "")
+    #    if kwargs['password']:
+     #       kwargs['password'] = md5(bytes(val.encode('utf-8'))).hexdigest()
         super().__init__(*args, **kwargs)
