@@ -44,15 +44,7 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
-            new_dict = self.__objects[key].__dict__.copy()
-            if "created_at" in new_dict:
-                new_dict["created_at"] = new_dict["created_at"].strftime(time)
-            if "updated_at" in new_dict:
-                new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-            new_dict["__class__"] = self.__class__.__name__
-            if "_sa_instance_state" in new_dict:
-                del new_dict["_sa_instance_state"]
-            json_objects[key] = new_dict
+            json_objects[key] = self.__objects[key].to_dict(save=True)
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
