@@ -27,7 +27,7 @@ class User(BaseModel, Base):
 
     @property
     def password(self):
-        """Geter attribute"""
+        """Getter attribute"""
         return self.__dict__['_password']
 
     @password.setter
