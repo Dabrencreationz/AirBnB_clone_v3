@@ -92,7 +92,7 @@ def place_search():
                     if place not in result:
                         result.append(place)
     if ame:
-        for id_in ame:
+        for id_ in ame:
             val = storage.get(Amenity, id_)
             if val:
                 amen.append(val)
