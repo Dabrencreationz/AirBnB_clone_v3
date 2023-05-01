@@ -100,10 +100,8 @@ def place_search():
         f_places = [x for x in f_places if all(
             mem in x.amenities for mem in l_amen)]
     places = []
-    for p in f_places:
-        d = p.to_dict()
-        d.pop('amenities', None)
-        places.append(d)
-
+    for place in f_places:
+        dict_ = place.to_dict()
+        dict_.pop('amenities', None)
+        places.append(dict_)
     return jsonify(places)
-    #return jsonify([x.to_dict() for x in f_places])
