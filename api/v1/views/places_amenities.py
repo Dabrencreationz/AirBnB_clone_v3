@@ -40,7 +40,7 @@ def work_with_ids(place_id, amenity_id):
             if amen.id in val.amenity_ids:
                 return make_response(jsonify(amen.to_dict()), 200)
             val.amenity_ids.append(amenity_id)
-            storage.save()
+        storage.save()
         return make_response(jsonify(amen.to_dict()), 201)
     elif request.method == 'DELETE':
         if getenv('HBNB_TYPE_STORAGE') == 'db':
