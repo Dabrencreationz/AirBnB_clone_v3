@@ -3,8 +3,10 @@
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 from models import storage
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
+from models.state import State
 
 
 @app_views.route('/cities/<string:city_id>/places',
@@ -58,3 +60,43 @@ def work_with_place_id(place_id):
                 setattr(val, k, v)
         val.save()
         return make_response(jsonify(val.to_dict()), 200)
+
+
+@app_views.route('/places_search', strict_slashes=False, methods=['POST'])
+def place_search():
+    data = request.get_json()
+    if data is None:
+        return make_response(jsonify("Not a JSON"), 400)
+    if data and len(data):
+        sta_s = data.get(states, None)
+        ci_s = data.get(cities, None)
+        ame = data.get(amenities, None)
+    if ((not data) or
+            (not len(data)) or
+            (sta_s is None and ci_s is None and ame is None)):
+        return jsonify([x.to_dict() for x in storage.all(Places).values()])
+    result = []
+    amen = []
+    if sta_s:
+        for id_ in sta_s:
+            val = storage.get(State, id_)
+            if val:
+                for city in val.cities:
+                    for place in city.places:
+                        result.append(place)
+    if ci_s:
+        for id_ in ci_s:
+            val = storage.get(City, id_)
+            if val:
+                for place in val.places:
+                    if place not in result:
+                        result.append(place)
+    if ame:
+        for id_in ame:
+            val = storage.get(Amenity, id_)
+            if val:
+                amen.append(val)
+    if amen:
+        result = [x for x in result
+                  if all(mem in place.amenities for mem in amen)]
+    return jsonify([x.to_dict() for x in result])
