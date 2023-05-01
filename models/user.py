@@ -38,4 +38,7 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
+        val = kwargs.get('password', "")
+        self.password = val
+        kwargs.pop('password', None)
         super().__init__(*args, **kwargs)
