@@ -99,4 +99,11 @@ def place_search():
         l_amen = [x for x in l_amen_s if x is not None]
         f_places = [x for x in f_places if all(
             mem in x.amenities for mem in l_amen)]
-    return jsonify([x.to_dict() for x in f_places])
+    places = []
+    for p in f_places:
+        d = p.to_dict()
+        d.pop('amenities', None)
+        places.append(d)
+
+    return jsonify(places)
+    #return jsonify([x.to_dict() for x in f_places])
