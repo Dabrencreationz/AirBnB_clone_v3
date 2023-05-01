@@ -113,5 +113,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
-  def test_get(self):
-      pass
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all(self):
+        """Test count all instances"""
+        storage = FileStorage()
+        initial_count = storage.count()
+        s = State(name="California")
+        s.save()
+        new_count = storage.count()
+        self.assertEqual(new_count, initial_count + 1)
+        
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_cls(self):
+        """Test count instances of a specific class"""
+        storage = FileStorage()
+        initial_count = storage.count(State)
+        s = State(name="Nevada")
+        s.save()
+        new_count = storage.count(State)
+        self.assertEqual(new_count, initial_count + 1)
+        
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_existing_instance(self):
+        """Test get an existing instance"""
+        storage = FileStorage()
+        s = State(name="Oregon")
+        s.save()
+        state_id = s.id
+        retrieved_state = storage.get(State, state_id)
+        self.assertEqual(retrieved_state.id, state_id)
+        self.assertEqual(retrieved_state.name, "Oregon")
+        
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_non_existing_instance(self):
+        """Test get a non-existing instance"""
+        storage = FileStorage()
+        retrieved_state = storage.get(State, "non_existing_id")
+        self.assertIsNone(retrieved_state)
