@@ -28,6 +28,8 @@ class User(BaseModel, Base):
     @property
     def password(self):
         """Getter attribute"""
+        if models.storage_t == 'db':
+            return self.__dict__.get('_password', None)
         return self.__dict__.get('_password', "")
 
     @password.setter
@@ -38,7 +40,4 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
-        if '_password' in kwargs:
-            self.password = kwargs['_password']
-        kwargs.pop('_password', None)
         super().__init__(*args, **kwargs)
