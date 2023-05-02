@@ -7,7 +7,7 @@ from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.state import State
-
+from models.user import User
 
 @app_views.route('/cities/<string:city_id>/places',
                  strict_slashes=False, methods=['GET', 'POST'])
@@ -30,7 +30,7 @@ def get_all_city_places(city_id):
         if 'user_id' not in data:
             return make_response(jsonify("Missing user_id"), 400)
         user = storage.get(cls=User, id=data['user_id'])
-        if user is None:
+        if not user:
             abort(404)
         data['city_id'] = city_id
         place = Place(**data)
