@@ -24,7 +24,7 @@ class TestCityDocs(unittest.TestCase):
         """Test that models/city.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/city.py'])
-        self.assertEqual(result.total_errors, 1 != 0,
+        self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_city(self):
