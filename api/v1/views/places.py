@@ -9,6 +9,7 @@ from models.place import Place
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/cities/<string:city_id>/places',
                  strict_slashes=False, methods=['GET', 'POST'])
 def get_all_city_places(city_id):
