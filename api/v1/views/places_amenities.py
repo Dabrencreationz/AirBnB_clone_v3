@@ -32,13 +32,11 @@ def work_with_ids(place_id, amenity_id):
     if val is None or amen is None:
         abort(404)
     if request.method == 'POST':
-        if amen in val.amenites and amenity_id in val.amenity_ids:
+        if amen in val.amenites:
             return make_response(jsonify(amen.to_dict()), 200)
         if getenv('HBNB_TYPE_STORAGE') == 'db':
             val.amenities.append(amen)
         else:
-            if amen.id in val.amenity_ids:
-                return make_response(jsonify(amen.to_dict()), 200)
             val.amenity_ids.append(amenity_id)
         storage.save()
         return make_response(jsonify(amen.to_dict()), 201)
