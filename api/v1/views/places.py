@@ -27,6 +27,11 @@ def get_all_city_places(city_id):
             return make_response(jsonify("Not a JSON"), 400)
         if 'name' not in data:
             return make_response(jsonify("Missing name"), 400)
+        if 'user_id' not in data:
+            return make_response(jsonify("Missing user_id"), 400)
+        user = storage.get(cls=User, id=data['user_id'])
+        if user is None:
+            abort(404)
         data['city_id'] = city_id
         place = Place(**data)
         place.save()

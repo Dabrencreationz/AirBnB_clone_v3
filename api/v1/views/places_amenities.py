@@ -32,9 +32,9 @@ def work_with_ids(place_id, amenity_id):
     if val is None or amen is None:
         abort(404)
     if request.method == 'POST':
+        if amen in val.amenites:
+            return make_response(jsonify(amen.to_dict()), 200)
         if getenv('HBNB_TYPE_STORAGE') == 'db':
-            if amen in val.amenites:
-                return make_response(jsonify(amen.to_dict()), 200)
             val.amenities.append(amen)
         else:
             if amen.id in val.amenity_ids:
@@ -44,7 +44,7 @@ def work_with_ids(place_id, amenity_id):
         return make_response(jsonify(amen.to_dict()), 201)
     elif request.method == 'DELETE':
         if getenv('HBNB_TYPE_STORAGE') == 'db':
-            if amen not in place.amenites:
+            if amen not in val.amenites:
                 abort(404)
             val.amenities.remove(amen)
         else:

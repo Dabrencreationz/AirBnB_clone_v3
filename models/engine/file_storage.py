@@ -79,4 +79,3 @@ class FileStorage:
     def count(self, cls=None):
         """couCounts all instance of a class"""
         return len(self.all(cls))
-
